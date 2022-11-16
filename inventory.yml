@@ -12,7 +12,7 @@ all:
     datagrid_certs: xsite.jks
 
     rhsso_admin_user: ataxexe
-    rhsso_admin_password: backpackcloud
+    rhsso_admin_password: dareyio
 
     datagrid_rhsso_user: developer
     datagrid_rhsso_password: developer
@@ -27,7 +27,7 @@ all:
     cache_sessions_configuration: async
     cache_work_configuration: sync
 
-    sso_domain: sso.backpackcloud.com
+    sso_domain: sso.dareyio.com
 
     mariadb_root_password: root
     mariadb_rhsso_database: rhsoo
@@ -43,39 +43,39 @@ all:
         site: site_a
 
       hosts:
-        rhssoa1.infra.backpackcloud.com:
-        rhssoa2.infra.backpackcloud.com:
+        rhssoa1.infra.dareyio.com:
+        rhssoa2.infra.dareyio.com:
 
-        rhdga1.infra.backpackcloud.com:
-        rhdga2.infra.backpackcloud.com:
+        rhdga1.infra.dareyio.com:
+        rhdga2.infra.dareyio.com:
 
-        mariadba.infra.backpackcloud.com:
+        # mariadba.infra.dareyio.com:
 
     site_b:
       vars:
         site: site_b
 
       hosts:
-        rhssob1.infra.backpackcloud.com:
-        rhssob2.infra.backpackcloud.com:
+        rhssob1.infra.dareyio.com:
+        rhssob2.infra.dareyio.com:
 
-        rhdgb1.infra.backpackcloud.com:
-        rhdgb2.infra.backpackcloud.com:
+        rhdgb1.infra.dareyio.com:
+        rhdgb2.infra.dareyio.com:
 
-        mariadbb.infra.backpackcloud.com:
+        # mariadbb.infra.dareyio.com:
 
     datagrid:
       hosts:
-        rhdg[a:b][1:2].infra.backpackcloud.com:
+        rhdg[a:b][1:2].infra.dareyio.com:
 
     rhsso:
       hosts:
-        rhsso[a:b][1:2].infra.backpackcloud.com:
+        rhsso[a:b][1:2].infra.dareyio.com:
 
-    mariadb:
-      hosts:
-        mariadb[a:b].infra.backpackcloud.com:
+    # mariadb:
+    #   hosts:
+    #     mariadb[a:b].infra.dareyio.com:
 
     haproxy:
       hosts:
-        haproxy.infra.backpackcloud.com:
+        haproxy.infra.dareyio.com:

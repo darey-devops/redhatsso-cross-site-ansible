@@ -1,6 +1,6 @@
 ---
-- name: Install MariaDB
-  import_playbook: mariadb.yml
+# - name: Install MariaDB
+#   import_playbook: mariadb.yml
 
 - name: Install Data Grid
   import_playbook: datagrid.yml
