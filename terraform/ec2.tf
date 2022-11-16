@@ -71,6 +71,18 @@ resource "aws_instance" "rhdga" {
   }
 }
 
+
+resource "aws_instance" "rhdgb" {
+  count                  = 2
+  ami                    = "ami-023cd3f0d10fb8a9c"
+  instance_type          = "m4.large"
+  key_name               = aws_key_pair.sso_key.key_name
+  vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
+  tags = {
+    Name = "${var.developer}-rhdgb-${count.index + 1}"
+  }
+}
+
 resource "aws_instance" "rhhaproxy" {
   count                  = 1
   ami                    = "ami-023cd3f0d10fb8a9c"
