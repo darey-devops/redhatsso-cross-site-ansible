@@ -1,26 +1,26 @@
 ---
-- name: Configure firewall
-  firewalld:
-    port: "{{ item }}"
-    permanent: true
-    immediate: true
-    state: enabled
-  loop:
-    - 3306/tcp
-    - 4567/tcp
-    - 4567/udp
-    - 4568/tcp
-    - 4444/tcp
-  tags:
-    - firewall
+# - name: Configure firewall
+#   firewalld:
+#     port: "{{ item }}"
+#     permanent: true
+#     immediate: true
+#     state: enabled
+#   loop:
+#     - 3306/tcp
+#     - 4567/tcp
+#     - 4567/udp
+#     - 4568/tcp
+#     - 4444/tcp
+#   tags:
+#     - firewall
 
-- name: Ensure firewall is enabled
-  service:
-    name: firewalld
-    enabled: true
-    state: started
-  tags:
-    - firewall
+# - name: Ensure firewall is enabled
+#   service:
+#     name: firewalld
+#     enabled: true
+#     state: started
+#   tags:
+#     - firewall
 
 - name: Install mariadb packages
   package:
