@@ -3,9 +3,18 @@ all:
     ansible_user: ec2-user
     ansible_ssh_private_key_file: ~/.ssh/id_rsa
 
-    datagrid_package_path: .bin/redhat-datagrid-8.2.1-server.zip
+    datagrid_package_path: .bin/redhat-datfagrid-8.2.1-server.zip
+    # TODO:
+    datagrid_package_url: ""
 
     rhsso_package_path: .bin/rh-sso-7.5.0-server-dist.zip
+    # TODO:
+    rhsso_package_url: ""
+
+# TODO:
+    rhsso_patches:
+    - path: https://storage.example.com/files/redhat/rhsso/rh-sso-7.4.8-patch.zip
+      name: rh-sso-7.4.8-patch.zip
 
     certs_dir: .bin
     haproxy_certs: certs.pem
