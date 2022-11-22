@@ -3,17 +3,10 @@
 terraform {
   required_version = ">= 1.3.2"
 
-  backend "s3" {
-    bucket = "redhat-sso"
-    key    = "state/sso-poc.tfstate"
-    region = "eu-west-2"
-  }
+  backend "s3" {}
 }
 
-provider "aws" {
-  region  = "eu-west-2"
-  profile = "sso"
-}
+
 
 # US_EAST-1
 # resource "aws_instance" "sso" {
@@ -29,7 +22,7 @@ provider "aws" {
 
 resource "aws_instance" "control" {
   count                  = 1
-  ami                    = "ami-023cd3f0d10fb8a9c"
+  ami                    = var.ami
   instance_type          = "t3.medium"
   key_name               = aws_key_pair.sso_key.key_name
   vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
@@ -40,7 +33,7 @@ resource "aws_instance" "control" {
 
 resource "aws_instance" "rhssoa" {
   count                  = 2
-  ami                    = "ami-023cd3f0d10fb8a9c"
+  ami                    = var.ami
   instance_type          = "m4.large"
   key_name               = aws_key_pair.sso_key.key_name
   vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
@@ -51,7 +44,7 @@ resource "aws_instance" "rhssoa" {
 
 resource "aws_instance" "rhssob" {
   count                  = 2
-  ami                    = "ami-023cd3f0d10fb8a9c"
+  ami                    = var.ami
   instance_type          = "m4.large"
   key_name               = aws_key_pair.sso_key.key_name
   vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
@@ -62,7 +55,7 @@ resource "aws_instance" "rhssob" {
 
 resource "aws_instance" "rhdga" {
   count                  = 2
-  ami                    = "ami-023cd3f0d10fb8a9c"
+  ami                    = var.ami
   instance_type          = "m4.large"
   key_name               = aws_key_pair.sso_key.key_name
   vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
@@ -74,7 +67,7 @@ resource "aws_instance" "rhdga" {
 
 resource "aws_instance" "rhdgb" {
   count                  = 2
-  ami                    = "ami-023cd3f0d10fb8a9c"
+  ami                    = var.ami
   instance_type          = "m4.large"
   key_name               = aws_key_pair.sso_key.key_name
   vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
@@ -85,7 +78,7 @@ resource "aws_instance" "rhdgb" {
 
 resource "aws_instance" "rhhaproxy" {
   count                  = 1
-  ami                    = "ami-023cd3f0d10fb8a9c"
+  ami                    = var.ami
   instance_type          = "m4.large"
   key_name               = aws_key_pair.sso_key.key_name
   vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
@@ -95,6 +88,49 @@ resource "aws_instance" "rhhaproxy" {
 }
 
 resource "aws_key_pair" "sso_key" {
-  key_name   = "poc-sso-key"
+  key_name   = "${var.developer}-poc-sso-key"
   public_key = var.ssh_key
 }
+
+
+resource "aws_instance" "test" {
+  count                  = 1
+  ami                    = var.ami
+  instance_type          = "m4.large"
+  key_name               = aws_key_pair.sso_key.key_name
+  vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
+  tags = {
+    Name = "${var.developer}-rhhaproxy-${count.index + 1}"
+  }
+
+#####  Upload host file into ec2
+
+  provisioner "file" {
+        source      = "/mnt/e/Redhat/Terraform/redhatsso-cross-site-ansible/terraform/variable.tf"
+        destination = "/var/tmp/ "
+       
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = "${file("~/.ssh/id_rsa")}"   # substitute your path in this location
+      host        = "${self.public_ip}"
+    }
+   }
+
+
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "sudo cp -R /var/tmp/hosts ~/home/ec2",
+  #     "ls",
+  #   ]
+  #   connection {
+  #     type        = "ssh"
+  #     user        = "ec2-user"
+  #     private_key = "${file("~/.ssh/id_rsa")}"
+  #     host        = "${self.public_ip}"
+  #   }  
+  
+  # }
+}
+
+# update the host files by uploading the files to etc/hosts 
