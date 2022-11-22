@@ -6,6 +6,10 @@ terraform {
   backend "s3" {}
 }
 
+provider "aws" {
+  region  = "eu-west-2"
+  profile = "iamgp"
+}
 
 
 # US_EAST-1
@@ -88,7 +92,11 @@ resource "aws_instance" "rhhaproxy" {
 }
 
 resource "aws_key_pair" "sso_key" {
+
   key_name   = "${var.developer}-poc-sso-key"
+
+  # key_name   = "aws-key"
+
   public_key = var.ssh_key
 }
 
