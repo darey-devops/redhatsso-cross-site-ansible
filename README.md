@@ -199,3 +199,10 @@ rhsso_datasource:
   user-name: rhsso
   password: rhsso 
 ```
+
+
+```
+Terraform command 
+terraform init --backend=<your backend.conf path>
+terraform plan --var-file=<path to tfvars>
+terraform apply --var-file=<path to tfvars>
