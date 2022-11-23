@@ -33,6 +33,23 @@ resource "aws_instance" "control" {
   tags = {
     Name = "${var.developer}-redhat-ansible-control-${count.index + 1}"
   }
+  provisioner "file" {
+    source      = "/home/iamgp/Desktop/dev/devprojects/redhatsso-cross-site-ansible/terraform/source/hosts"
+    destination = "/home/ec2-user/host"
+  }
+  connection {
+      type        = "ssh"
+      host        = self.public_ip
+      user        = "ec2-user"
+      private_key = file("/home/iamgp/.ssh/id_aws") 
+      
+      # timeout     = "4m"
+   }
+   provisioner "remote-exec" {
+    inline = [
+      "sudo /bin/bash -c 'cat ./host >> /etc/hosts'"
+    ]
+}
 }
 
 resource "aws_instance" "rhssoa" {
@@ -94,36 +111,34 @@ resource "aws_instance" "rhhaproxy" {
 resource "aws_key_pair" "sso_key" {
 
   key_name   = "${var.developer}-poc-sso-key"
-
-  # key_name   = "aws-key"
-
   public_key = var.ssh_key
 }
 
 
-resource "aws_instance" "test" {
-  count                  = 1
-  ami                    = var.ami
-  instance_type          = "m4.large"
-  key_name               = aws_key_pair.sso_key.key_name
-  vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
-  tags = {
-    Name = "${var.developer}-rhhaproxy-${count.index + 1}"
-  }
+# resource "aws_instance" "test" {
+#   count                  = 1
+#   ami                    = var.ami
+#   instance_type          = "m4.large"
+#   key_name               = aws_key_pair.sso_key.key_name
+#   vpc_security_group_ids = ["sg-0861a249f79fe7ddc"]
+#   tags = {
+#     Name = "${var.developer}-rhhaproxy-${count.index + 1}"
+#   }
 
 #####  Upload host file into ec2
 
-  provisioner "file" {
-        source      = "/mnt/e/Redhat/Terraform/redhatsso-cross-site-ansible/terraform/variable.tf"
-        destination = "/var/tmp/ "
+  # provisioner "file" {
+  #       source      = "./terraform/source/hosts"
+  #       destination = "/var/tmp/ "
+  #       # source      = "./Terraform/redhatsso-cross-site-ansible/terraform/source/hosts"
        
-    connection {
-      type        = "ssh"
-      user        = "ec2-user"
-      private_key = "${file("~/.ssh/id_rsa")}"   # substitute your path in this location
-      host        = "${self.public_ip}"
-    }
-   }
+  #   connection {
+  #     type        = "ssh"
+  #     user        = "ec2-user"
+  #     private_key = "${file("~/.ssh/ansible.pem")}"   # substitute your path in this location
+  #     host        = "${self.public_ip}"
+  #   }
+  #  }
 
 
   # provisioner "remote-exec" {
@@ -139,6 +154,6 @@ resource "aws_instance" "test" {
   #   }  
   
   # }
-}
+
 
 # update the host files by uploading the files to etc/hosts 
