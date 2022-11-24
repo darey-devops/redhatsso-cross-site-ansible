@@ -3,18 +3,18 @@ all:
     ansible_user: ec2-user
     ansible_ssh_private_key_file: ~/.ssh/id_rsa
 
-    datagrid_package_path: .bin/redhat-datfagrid-8.2.1-server.zip
+    datagrid_package_path: .bin/redhat-datagrid-8.4.0-server.zip
     # TODO:
-    datagrid_package_url: ""
+    datagrid_package_url: "http://18.170.247.110/binary/rhssobinaries/"
 
-    rhsso_package_path: .bin/rh-sso-7.5.0-server-dist.zip
+    rhsso_package_path: .bin/rh-sso-7.6.0-server-dist.zip
     # TODO:
-    rhsso_package_url: ""
+    rhsso_package_url: "http://18.170.247.110/binary/rhssobinaries/"
 
 # TODO:
     rhsso_patches:
-    - path: https://storage.example.com/files/redhat/rhsso/rh-sso-7.4.8-patch.zip
-      name: rh-sso-7.4.8-patch.zip
+    - path: http://18.170.247.110/binary/rhssobinaries/rh-sso-7.6.0-server-dist.zip
+      name: rh-sso-7.6.0-server-dist.zip
 
     certs_dir: .bin
     haproxy_certs: certs.pem
@@ -36,7 +36,7 @@ all:
     cache_sessions_configuration: async
     cache_work_configuration: sync
 
-    sso_domain: sso.dareyio.com
+    sso_domain: sso.dev.darey.io
 
     mariadb_root_password: root
     mariadb_rhsso_database: rhsoo
@@ -52,39 +52,39 @@ all:
         site: site_a
 
       hosts:
-        rhssoa1.infra.dareyio.com:
-        rhssoa2.infra.dareyio.com:
+        rhssoa1.infra.dev.darey.io:
+        rhssoa2.infra.dev.darey.io:
 
-        rhdga1.infra.dareyio.com:
-        rhdga2.infra.dareyio.com:
+        rhdga1.infra.dev.darey.io:
+        rhdga2.infra.dev.darey.io:
 
-        # mariadba.infra.dareyio.com:
+        # mariadba.infra.dev.darey.io:
 
     site_b:
       vars:
         site: site_b
 
       hosts:
-        rhssob1.infra.dareyio.com:
-        rhssob2.infra.dareyio.com:
+        rhssob1.infra.dev.darey.io:
+        rhssob2.infra.dev.darey.io:
 
-        rhdgb1.infra.dareyio.com:
-        rhdgb2.infra.dareyio.com:
+        rhdgb1.infra.dev.darey.io:
+        rhdgb2.infra.dev.darey.io:
 
-        # mariadbb.infra.dareyio.com:
+        # mariadbb.infra.dev.darey.io:
 
     datagrid:
       hosts:
-        rhdg[a:b][1:2].infra.dareyio.com:
+        rhdg[a:b][1:2].infra.dev.darey.io:
 
     rhsso:
       hosts:
-        rhsso[a:b][1:2].infra.dareyio.com:
+        rhsso[a:b][1:2].infra.dev.darey.io:
 
     # mariadb:
     #   hosts:
-    #     mariadb[a:b].infra.dareyio.com:
+    #     mariadb[a:b].infra.dev.darey.io:
 
-    haproxy:
-      hosts:
-        haproxy.infra.dareyio.com:
+    # haproxy:
+    #   hosts:
+    #     haproxy.infra.dev.darey.io:
