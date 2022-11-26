@@ -19,8 +19,8 @@ xsite_ssl:
   dir: "{{ certs_dir | default('.') }}"
   name: "{{ datagrid_certs | default('xsite.jks') }}"
   alias: xsite
-  key_password: changeit
-  store_password: changeit
+  key_password: "changeit"
+  store_password: "changeit"
   type: JCEKS
   alg: Blowfish
   size: 56

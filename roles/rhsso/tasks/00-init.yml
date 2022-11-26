@@ -31,6 +31,15 @@
       password: "{{ datagrid_rhsso_password }}"
       host: "{{ datagrid_site_nodes[0] }}"
 
+# - name: MariaDB
+#   gather_fact: true
+#   tasks:
+#     - name: install
+#       yum:
+#         name:
+#           - mariadb-server
+#         state: latest
+
 - name: Compute MariaDB connection parameters
   set_fact:
     rhsso_datasource:
@@ -40,6 +49,7 @@
       password: "{{ mariadb_rhsso_password }}"
   when: "hostvars[item].site == site"
   loop: "{{ groups['mariadb'] }}"
+
 
 - name: Compute hosts
   set_fact:

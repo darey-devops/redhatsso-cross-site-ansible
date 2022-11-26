@@ -8,5 +8,5 @@
 - name: Install RH-SSO
   import_playbook: rhsso.yml
 
-- name: Install HA-Proxy
-  import_playbook: haproxy.yml
+#- name: Install HA-Proxy
+#  import_playbook: haproxy.yml

@@ -31,6 +31,7 @@
       -storetype {{ xsite_ssl.type }} \
       -keystore "{{ xsite_ssl.dir }}/{{ xsite_ssl.name }}"
   run_once: true
+  become: yes
   when: not jks_file.stat.exists
 
 - name: Push JKS to server
