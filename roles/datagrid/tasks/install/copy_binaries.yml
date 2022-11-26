@@ -5,6 +5,7 @@
     dest: "{{ install_dir }}"
     owner: "{{ service.user }}"
     group: "{{ service.group }}"
+    remote_src: true
 
 - name: Copy patch file
   copy:
